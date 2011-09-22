@@ -1,0 +1,54 @@
+#!/usr/bin/perl
+# getmus - Listens for status updates from cmus and writes current
+# song and artist to file that gets read by xmobar.
+#
+# Inside cmus, run:
+# :set status_display_program=/home/user/getmus
+#
+# The following are read via @ARGV from cmus:
+# 0: status
+# 1: [playing/paused/etc]
+# 2: file
+# 3: [/path/to/musicfile.mp3]
+# 4: artist
+# 5: Artist Name from ID3 tag
+# 6: album
+# 7: Album name from ID3 tag
+# 8: tracknumber
+# 9: Track number from ID3 tag
+# 10: title
+# 11: Title name from ID3 tag
+# 12: date
+# 13: Date from ID3 Tag
+# 14: duration
+# 15: Song duration in seconds
+use strict;
+use warnings;
+
+# open two files for writing, one to capture the current artist and song
+# name that are playing, the other to capture all information cmus gives
+# us about the current song regardless of whether it's playing or paused.
+open (OUT, ">", "/home/chris/.cmus/out.txt");
+open (CUR, ">", "/home/chris/.cmus/current.txt");
+
+# display artist: songname if the song is playing
+if ($ARGV[0] eq "status" && $ARGV[1] eq "playing") {
+    print CUR "$ARGV[5]: $ARGV[11]";
+}
+# display paused message if status is paused
+elsif ($ARGV[0] eq "status" && $ARGV[1] eq "paused") {
+    print CUR "[ CMUS PAUSED ]";
+}
+# clear file if not paused or playing (probably stopped)
+else {
+    print CUR "";
+}   
+
+# save all output about current song so we can examine it later
+foreach my $arg (@ARGV) {
+    print OUT "$arg\n";
+}
+
+close OUT;
+close CUR;
+

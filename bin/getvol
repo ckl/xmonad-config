@@ -1,0 +1,3 @@
+#!/usr/bin/perl
+# calls 'amixer get Master' and extracts the volume percent
+if (`amixer get Master` =~ /\[(\d{1,3}%)\]/) { print "$1\n"; }

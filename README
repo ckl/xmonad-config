@@ -1,0 +1,9 @@
+This repository contains my XMonad configuration files.
+
+Installation:
+
+    git clone git://github.com/ckl/xmonad-config.git ~/
+    cp ~/xmonad-config/xmonad.hs ~/.xmonad/
+    cp ~/xmonad-config/conkyrc ~/.xmonad/conkyrc
+    cp -r ~/xmonad-config/lib/ ~/.xmonad
+    cp -r ~/xmonad-config/bin/* ~/bin/
