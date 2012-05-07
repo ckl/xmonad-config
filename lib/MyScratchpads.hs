@@ -1,6 +1,7 @@
 ---------------------------------------------------------------------
 -- |
 -- Module     : MyScratchpads.hs
+-- Maintainer : chris.lu06@gmail.com
 --
 -- This module is similar to XMonad.Util.NamedScratchpad and also
 -- draws inspiration from pbrisbin's ScratchPadKeys. Since Gnome-terminal
@@ -17,6 +18,7 @@ module MyScratchpads
     , getScratchpadHooks
       -- Manage hooks
     , centerScreen
+    , centerRight
     , bottomLeft
     , bottomCenter
     , bottomRight
@@ -200,6 +202,9 @@ topCenter w h = doRectFloat $ W.RationalRect ((1 - w)/2) 0.01 w h
 topRight :: Rational -> Rational -> ManageHook
 topRight w h = doRectFloat $ W.RationalRect (0.99 - w) 0.01 w h
 
+centerRight :: Rational -> Rational -> ManageHook
+centerRight w h = doRectFloat $ W.RationalRect (0.99 - w) ((1 - h)/2) w h
+
 -- | Floating rectangular window at the center of the screen
 centerScreen :: Rational -> Rational -> ManageHook
 centerScreen w h = doRectFloat $ W.RationalRect ((1 - w)/2) ((1 - h)/2) w h
@@ -207,4 +212,5 @@ centerScreen w h = doRectFloat $ W.RationalRect ((1 - w)/2) ((1 - h)/2) w h
 -- | Floats along the entire bottom edge of the screen with the specified height
 bottomEdge :: Rational -> ManageHook
 bottomEdge h = doRectFloat $ W.RationalRect 0 (1 - h) 1 h
+
 

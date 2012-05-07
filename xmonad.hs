@@ -1,4 +1,6 @@
 -- My XMonad configuration file
+-- Chris Lu - chris.lu06@gmail.com
+-- For details, go to http://www.cklu.net
 import XMonad
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.WindowGo	
@@ -77,7 +79,7 @@ myStartup :: X ()
 myStartup = do
 	spawn "nitrogen --restore"
     -- only run transmission if it's not already running
-	runOrRaise "transmission" (className =? "transmission")
+	-- runOrRaise "transmission" (className =? "transmission")
 
 -----------------------------------------------------------
 -- Window and scratchpad hooks
@@ -87,7 +89,7 @@ myWindowHook = (composeAll . concat $
     [ [(role =? "gimp-toolbox" <||> role =? "gimp-image-window" <||> role =? "gimp-dock") --> (ask >>= doF . W.sink)]
     , [ className =? x --> doF (W.shift "7:gimp")   | x <- myGimpApp ]
     , [ className =? x --> doF (W.shift "8:aard")   | x <- myAardApp ]
-    , [ className =? x --> doF (W.shift "9:bt")     | x <- myBtApp ]
+    --, [ className =? x --> doF (W.shift "9:bt")     | x <- myBtApp ]
     , [ className =? x --> doCenterFloat            | x <- myCenterFloats ]
     , [ isFullscreen   --> doFullFloat]
     ]) 
@@ -108,14 +110,17 @@ terminalScratchpad = scratchpadManageHook (W.RationalRect l t w h)
         l = 0.01    -- distance from left (percent)
 
 -- create scratchpads using definitions from MyScratchpad.hs
-myScratchpads :: [Scratchpad]
-myScratchpads =  [cmus, htop]
-
 cmus :: Scratchpad
 cmus = makeTerminalScratchpad (mod4Mask, xK_m) "cmus" $ centerScreen 0.5 0.5
 
 htop :: Scratchpad
 htop = makeTerminalScratchpad (mod4Mask, xK_h) "htop" $ bottomCenter 0.7 0.4
+
+transmission :: Scratchpad
+transmission = makeScratchpad (mod4Mask, xK_b) "transmission-gtk" "Transmission-gtk" $ centerRight 0.4 0.95
+
+myScratchpads :: [Scratchpad]
+myScratchpads =  [cmus, htop, transmission]
 
 -- combine all of our hooks and call it 'myManageHook'
 myManageHook = manageHook defaultConfig <+>
@@ -130,11 +135,11 @@ myLayout = onWorkspace "7:gimp" (named "Gimp" gimpFirst)   $
            named "myTall"       (modifiers tiled)          |||
            named "myFull"       (noBorders Full)           -- |||
            -- I find myself almost never using this layout
-           --named "myMirror"     (modifiers $ Mirror tiled) 
+           -- named "myMirror"     (modifiers $ Mirror tiled) 
     where 
         gimpFirst   = gimpLayout ||| modifiers tiled ||| modifiers (Mirror tiled)
         tiled       = ResizableTall nmaster delta ratio []
-        modifiers x = spacing (7) $ maximize $ avoidStruts $ Mag.magnifiercz 1.0 x
+        modifiers x = spacing (0) $ maximize $ avoidStruts $ Mag.magnifiercz 1.0 x
         -- gimp toolbar is on the left, docks on the right, image in middle
         gimpLayout  = avoidStruts  $ withIM (0.15) (Role "gimp-toolbox") $
                       reflectHoriz $ withIM (0.2)  (Role "gimp-dock") 
@@ -148,8 +153,11 @@ myLayout = onWorkspace "7:gimp" (named "Gimp" gimpFirst)   $
 -----------------------------------------------------------
 
 -- Top left status bar and top right conky bar
-myDzenBar  = "dzen2 -h 18 -w 700 -x 5 -ta l " ++ myBarFont
-myConkyBar = "conky -c ~/.xmonad/conkyrc | dzen2 -h 18 -w 980 -x 690 -ta r" ++ myBarFont
+--myDzenBar  = "dzen2 -h 18 -w 700 -x 5 -ta l " ++ myBarFont
+--myConkyBar = "conky -c ~/.xmonad/conkyrc | dzen2 -h 18 -w 980 -x 690 -ta r" ++ myBarFont
+--myBarFont  = " -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*'"
+myDzenBar  = "dzen2 -h 18 -w 700 -x 1680 -ta l " ++ myBarFont
+myConkyBar = "conky -c ~/.xmonad/conkyrc | dzen2 -h 18 -w 980 -x 2380 -ta r" ++ myBarFont
 myBarFont  = " -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*'"
 
 -- Colors used for left status bar
@@ -230,9 +238,9 @@ myKeys = M.fromList $
           -----------------------------------------------------------
         , ((mod4Mask, xK_a), spawn "gnome-terminal")
         , ((mod4Mask, xK_f), spawn "thunar")
-        , ((mod4Mask, xK_x), spawn "chromium-browser")
-        , ((mod4Mask, xK_0), spawn "chromium-browser --incognito")
-        , ((mod4Mask, xK_t), spawn "transmission")
+        , ((mod4Mask, xK_x), spawn "google-chrome")
+        , ((mod4Mask, xK_0), spawn "google-chrome --incognito")
+        , ((mod4Mask, xK_t), spawn "transmission-gtk")
         , ((mod4Mask, xK_c), spawn "pcmanfm")
           -----------------------------------------------------------
 	      -- multimedia hotkeys
@@ -264,6 +272,12 @@ myKeys = M.fromList $
           -- printscreen takes a screenshot of the entire screen
         , ((0, xK_Print), spawn "scrot")
           -----------------------------------------------------------
+          -- truecrypt hotkeys
+          -----------------------------------------------------------
+	    , ((controlMask .|. mod4Mask .|. mod1Mask, xK_p), spawn 
+                "truecrypt --mount /media/media/backups/.RECYCLE.BIN /media/truecrypt")
+	    , ((controlMask .|. mod4Mask .|. mod1Mask, xK_o), spawn 
+                "truecrypt --dismount /media/truecrypt")
         ]  ++ getScratchpadKeys myScratchpads
         -- must set these flags manually to use gnome-terminal with scratchpad
         where 
@@ -325,4 +339,3 @@ main = do
 -- logHook = dynamicLogWithPP $ xmobarPP
 -- { ppOutput = hPutStrLn xmproc
 -- , ppTitle = xmobarColor "green" "" . shorten 50
--- }

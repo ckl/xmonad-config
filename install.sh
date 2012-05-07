@@ -1,4 +1,5 @@
 # copy config files
+mkdir ~/.xmonad
 cp ./xmonad.hs ~/.xmonad/
 cp ./conkyrc ~/.xmonad/
 cp -r ./lib/ ~/.xmonad/
@@ -6,6 +7,7 @@ cp -r ./lib/ ~/.xmonad/
 # copy bin files
 mkdir ~/bin
 cp -r ./bin/* ~/bin
+chmod +x ~/bin/*
 echo "make sure ~/bin is in \$PATH"
 
 # icons
@@ -22,3 +24,4 @@ mv ./xbm8x8/* ~/.xmonad/images/icons/
 rmdir ./xbm8x8
 
 echo "done.\nreload your xmonad config"
+xmonad --recompile
