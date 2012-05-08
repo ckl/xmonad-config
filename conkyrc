@@ -4,21 +4,21 @@ total_run_times 0
 out_to_console yes
 
 TEXT
-^fg(\#59bbe8)^i(/home/chris/.icons/thayer/mpd.xbm) \
+^fg(\#59bbe8)^i(/home/chris/.xmonad/images/icons/mpd.xbm) \
 ^fg(\#ffffff)${execi 3 cat /home/chris/.cmus/current.txt} | \
-^fg(\#59bbe8)^i(/home/chris/.icons/thayer/load.xbm) \
+^fg(\#59bbe8)^i(/home/chris/.xmonad/images/icons/load.xbm) \
 ^fg(\#ffffff)${cpu}% | \
-^fg(\#59bbe8)^i(/home/chris/.icons/thayer/mem.xbm) \
+^fg(\#59bbe8)^i(/home/chris/.xmonad/images/icons/mem.xbm) \
 ^fg(\#ffffff)${memperc}% | ${swapperc}% | \
-^fg(\#59bbe8)^i(/home/chris/.icons/xbm8x8/net_down_03.xbm) \
+^fg(\#59bbe8)^i(/home/chris/.xmonad/images/icons/net_down_03.xbm) \
 ^fg(\#ffffff)${downspeed eth0} (${totaldown eth0}) | \
-^fg(\#59bbe8)^i(/home/chris/.icons/xbm8x8/net_up_03.xbm) \
+^fg(\#59bbe8)^i(/home/chris/.xmonad/images/icons/net_up_03.xbm) \
 ^fg(\#ffffff)${upspeed eth0} (${totalup eth0}) | \
 ^fg(\#59bbe8)${time %a} ^fg(\#ffffff)${time %b %d} \
 ^fg(\#000000)^bg(\#00a2ff) ${time %I:%M} ^bg()^fg(\#ffffff) | \
 ^fg(\#59bbe8)^i(/home/chris/.xmonad/images/icons/temp.xbm) \
 ^fg(\#ffffff)${execi 300 ~/bin/weather 55449} | \
-^fg(\#59bbe8)^i(/home/chris/.icons/thayer/vol-hi.xbm) \
+^fg(\#59bbe8)^i(/home/chris/.xmonad/images/icons/vol-hi.xbm) \
 ^fg(\#ffffff)${execi 3 /home/chris/bin/getvol}\
 
 
