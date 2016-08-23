@@ -1,7 +1,6 @@
 ---------------------------------------------------------------------
 -- |
 -- Module     : MyScratchpads.hs
--- Maintainer : chris.lu06@gmail.com
 --
 -- This module is similar to XMonad.Util.NamedScratchpad and also
 -- draws inspiration from pbrisbin's ScratchPadKeys. Since Gnome-terminal
