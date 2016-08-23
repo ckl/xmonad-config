@@ -1,5 +1,4 @@
 -- My XMonad configuration file
--- Chris Lu - chris.lu06@gmail.com
 -- For details, go to http://www.cklu.net
 import XMonad
 import XMonad.Actions.CopyWindow
